@@ -4,7 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>视频转GIF工具</title>
+    <link rel="stylesheet" href="css/common.css">
     <script src="js/gifshot.min.js"></script>
+    <script src="js/drag-drop.js"></script>
     <style>
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -122,12 +124,11 @@
       <!-- 替换原来的文件选择输入框为拖拽区域 -->
       <div class="input-group">
         <label for="videoFile">选择视频文件:</label>
-        <div id="drop-area">
+        <div id="drop-area" class="drop-area">
           <p>拖放视频文件到此处，或点击选择文件</p>
           <input type="file" id="videoFile" accept="video/*" style="display: none;" />
         </div>
       </div>
-
       <div class="preview">
         <label>视频预览:</label>
         <video id="videoPreview" controls></video>
@@ -199,6 +200,7 @@
         const downloadBtn = document.getElementById("downloadBtn");
         const errorText = document.getElementById("errorText");
         const dropArea = document.getElementById("drop-area");
+        const thumbnailContainer = document.getElementById("thumbnail-container");
   
         // 创建画布和上下文
         const canvas = document.createElement("canvas");
@@ -207,65 +209,17 @@
         
         // 保存上传文件的原始文件名
         let originalFileName = "";
+        
+        // 使用通用拖拽功能初始化，并传入缩略图容器
+        initDragDrop(dropArea, videoFileInput, handleFiles, "video/*", thumbnailContainer);
   
-        // 处理拖放事件
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-          dropArea.addEventListener(eventName, preventDefaults, false);
-        });
-  
-        function preventDefaults(e) {
-          e.preventDefault();
-          e.stopPropagation();
+        // 处理文件选择
+        function handleFiles(file) {
+          const videoURL = URL.createObjectURL(file);
+          videoPreview.src = videoURL;
+          // 保存原始文件名（去除扩展名）
+          originalFileName = file.name.replace(/\.[^/.]+$/, "");
         }
-  
-        ['dragenter', 'dragover'].forEach(eventName => {
-          dropArea.addEventListener(eventName, highlight, false);
-        });
-  
-        ['dragleave', 'drop'].forEach(eventName => {
-          dropArea.addEventListener(eventName, unhighlight, false);
-        });
-  
-        function highlight() {
-          dropArea.classList.add('highlight');
-        }
-  
-        function unhighlight() {
-          dropArea.classList.remove('highlight');
-        }
-  
-       // 处理文件拖放
-       dropArea.addEventListener('drop', handleDrop, false);
-  
-  function handleDrop(e) {
-    const dt = e.dataTransfer;
-    const files = dt.files;
-    
-    if (files.length > 0 && files[0].type.startsWith('video/')) {
-      handleFiles(files[0]);
-    }
-  }
-
-  // 点击区域选择文件
-  dropArea.addEventListener('click', () => {
-    videoFileInput.click();
-  });
-
-  // 处理文件选择
-  function handleFiles(file) {
-    const videoURL = URL.createObjectURL(file);
-    videoPreview.src = videoURL;
-    // 保存原始文件名（去除扩展名）
-    originalFileName = file.name.replace(/\.[^/.]+$/, "");
-  }
-
-  // 文件选择处理
-  videoFileInput.addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      handleFiles(file);
-    }
-  });
   
         // 转换按钮处理
         convertBtn.addEventListener("click", async () => {

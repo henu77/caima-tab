@@ -1,135 +1,419 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>安卓动态图片转 MP4 提取器</title>
+    <link rel="stylesheet" href="css/common.css" />
+    <script src="js/drag-drop.js"></script>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .file-input-container {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 20px;
-        }
-        #drop-area {
-            border: 2px dashed #ccc;
-            border-radius: 8px;
-            padding: 40px;
-            text-align: center;
-            cursor: pointer;
-            margin-bottom: 15px;
-            transition: background-color 0.3s;
-        }
-        #drop-area:hover {
-            background-color: #f0f0f0;
-        }
-        #drop-area.highlight {
-            border-color: #2196F3;
-            background-color: #e3f2fd;
-        }
-        #file-input {
-            display: none;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 10px 0;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        button:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-        }
-        #result {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 4px;
-            display: none;
-        }
-        .success {
-            background-color: #dff0d8;
-            color: #3c763d;
-        }
-        .error {
-            background-color: #f2dede;
-            color: #a94442;
-        }
-        #download-link {
-            display: none;
-            margin-top: 15px;
-        }
-        #log {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 4px;
-            font-family: monospace;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        .progress-container {
-            margin-top: 15px;
-            display: none;
-        }
-        progress {
-            width: 100%;
-            height: 20px;
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .file-input-container {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+      }
+      #drop-area {
+        border: 2px dashed #ccc;
+        border-radius: 8px;
+        padding: 40px;
+        text-align: center;
+        cursor: pointer;
+        margin-bottom: 15px;
+        transition: background-color 0.3s;
+      }
+      #drop-area:hover {
+        background-color: #f0f0f0;
+      }
+      #drop-area.highlight {
+        border-color: #2196f3;
+        background-color: #e3f2fd;
+      }
+      #file-input {
+        display: none;
+      }
+      button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 10px 0;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+      }
+      #result {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 4px;
+        display: none;
+      }
+      .success {
+        background-color: #dff0d8;
+        color: #3c763d;
+      }
+      .error {
+        background-color: #f2dede;
+        color: #a94442;
+      }
+      #download-link {
+        display: none;
+        margin-top: 15px;
+      }
+      #log {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        font-family: monospace;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+      .progress-container {
+        margin-top: 15px;
+        display: none;
+      }
+      progress {
+        width: 100%;
+        height: 20px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1>JPG 转 MP4 提取器</h1>
-        <p>本工具可以从特殊的 JPG 文件中提取嵌入的 MP4 视频。</p>
-        
-        <div class="file-input-container">
-            <div id="drop-area">
-                <p>拖放 JPG 文件到此处，或点击选择文件</p>
-                <input type="file" id="file-input" accept=".jpg,.jpeg" />
-            </div>
-            <button id="extract-btn" disabled>提取视频</button>
+      <h1>JPG 转 MP4 提取器</h1>
+      <p>本工具可以从特殊的 JPG 文件中提取嵌入的 MP4 视频。</p>
+
+      <div class="file-input-container">
+        <div id="drop-area" class="drop-area">
+          <p>拖放 JPG 文件到此处，或点击选择文件</p>
+          <input
+            type="file"
+            id="file-input"
+            accept=".jpg,.jpeg"
+            style="display: none"
+          />
         </div>
-        
-        <div class="progress-container" id="progress-container">
-            <p>处理中，请稍候...</p>
-            <progress id="progress-bar" value="0" max="100"></progress>
-        </div>
-        
-        <div id="result"></div>
-        <a id="download-link" download="extracted_video.mp4">
-            <button>下载视频</button>
-        </a>
-        
-        <div id="log"></div>
+        <!-- 添加缩略图显示区域 -->
+        <div id="thumbnail-container" class="thumbnail-container"></div>
+        <button id="extract-btn" disabled>提取视频</button>
+      </div>
+
+      <div class="progress-container" id="progress-container">
+        <p>处理中，请稍候...</p>
+        <progress id="progress-bar" value="0" max="100"></progress>
+      </div>
+
+      <div id="result"></div>
+      <a id="download-link" download="extracted_video.mp4">
+        <button>下载视频</button>
+      </a>
+
+      <div id="log" class="log"></div>
     </div>
 
-    <script src="js/live2video.js"></script>
-</body>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const dropArea = document.getElementById("drop-area");
+        const fileInput = document.getElementById("file-input");
+        const extractBtn = document.getElementById("extract-btn");
+        const result = document.getElementById("result");
+        const downloadLink = document.getElementById("download-link");
+        const logElement = document.getElementById("log");
+        const progressContainer = document.getElementById("progress-container");
+        const progressBar = document.getElementById("progress-bar");
+        const thumbnailContainer = document.getElementById(
+          "thumbnail-container"
+        );
+
+        let selectedFile = null;
+
+        // 使用通用拖拽功能初始化，并传入缩略图容器
+        initDragDrop(
+          dropArea,
+          fileInput,
+          handleFiles,
+          ".jpg,.jpeg",
+          thumbnailContainer
+        );
+
+        function handleFiles(file) {
+          selectedFile = file;
+          logToConsole(
+            `已选择文件: ${selectedFile.name} (${formatFileSize(
+              selectedFile.size
+            )})`
+          );
+          extractBtn.disabled = false;
+        }
+
+        // Boyer-Moore 搜索算法实现
+        function searchPattern(pattern, data) {
+          const m = pattern.length;
+          const n = data.length;
+
+          if (m === 0 || n === 0) {
+            return -1;
+          }
+
+          // 预处理跳转表
+          const jumpTable = new Array(256).fill(m);
+          for (let i = 0; i < m - 1; i++) {
+            jumpTable[pattern[i]] = m - 1 - i;
+          }
+
+          // 搜索模式
+          let i = m - 1;
+          while (i < n) {
+            let j = m - 1;
+            while (j >= 0 && data[i] === pattern[j]) {
+              i--;
+              j--;
+            }
+            if (j === -1) {
+              return i + 1;
+            }
+            i += Math.max(jumpTable[data[i]] || m, 1);
+          }
+
+          return -1;
+        }
+
+        // 提取视频
+        extractBtn.addEventListener("click", async () => {
+          if (!selectedFile) {
+            showResult("请先选择一个 JPG 文件", "error");
+            return;
+          }
+
+          try {
+            result.style.display = "none";
+            downloadLink.style.display = "none";
+            progressContainer.style.display = "block";
+            extractBtn.disabled = true;
+
+            const fileArrayBuffer = await readFileAsArrayBuffer(selectedFile);
+            const fileBytes = new Uint8Array(fileArrayBuffer);
+
+            logToConsole("开始搜索 MP4 文件头...");
+
+            // 定义 MP4 文件头模式
+            const mp4Patterns = [
+              new Uint8Array([
+                0x00, 0x00, 0x00, 0x18, 0x66, 0x74, 0x79, 0x70, 0x6d, 0x70,
+                0x34, 0x32,
+              ]),
+              new Uint8Array([
+                0x00, 0x00, 0x00, 0x1c, 0x66, 0x74, 0x79, 0x70, 0x69, 0x73,
+                0x6f, 0x6d,
+              ]),
+              new Uint8Array([0x00, 0x00, 0x00, 0x1c, 0x66, 0x74, 0x79, 0x70]),
+            ];
+
+            let indexOfMp4 = -1;
+
+            // 使用 Web Worker 来处理大文件，避免阻塞 UI
+            const worker = new Worker(
+              URL.createObjectURL(
+                new Blob(
+                  [
+                    `
+                self.onmessage = function(e) {
+                    const { fileBytes, mp4Patterns } = e.data;
+                    
+                    function searchPattern(pattern, data) {
+                        const m = pattern.length;
+                        const n = data.length;
+                        
+                        if (m === 0 || n === 0) {
+                            return -1;
+                        }
+
+                        // 预处理跳转表
+                        const jumpTable = new Array(256).fill(m);
+                        for (let i = 0; i < m - 1; i++) {
+                            jumpTable[pattern[i]] = m - 1 - i;
+                        }
+
+                        // 搜索模式
+                        let i = m - 1;
+                        while (i < n) {
+                            let j = m - 1;
+                            
+                            // 每处理 1MB 数据报告一次进度
+                            if (i % (1024 * 1024) === 0) {
+                                self.postMessage({ 
+                                    type: 'progress', 
+                                    progress: (i / n) * 100 
+                                });
+                            }
+                            
+                            while (j >= 0 && data[i] === pattern[j]) {
+                                i--;
+                                j--;
+                            }
+                            if (j === -1) {
+                                return i + 1;
+                            }
+                            i += Math.max(jumpTable[data[i]] || m, 1);
+                        }
+
+                        return -1;
+                    }
+
+                    for (let i = 0; i < mp4Patterns.length; i++) {
+                        const pattern = mp4Patterns[i];
+                        const index = searchPattern(pattern, fileBytes);
+                        
+                        self.postMessage({ 
+                            type: 'patternResult', 
+                            patternIndex: i,
+                            result: index 
+                        });
+                        
+                        if (index >= 0) {
+                            self.postMessage({ 
+                                type: 'found', 
+                                index: index 
+                            });
+                            break;
+                        }
+                    }
+                    
+                    self.postMessage({ type: 'done' });
+                }
+            `,
+                  ],
+                  { type: "application/javascript" }
+                )
+              )
+            );
+
+            worker.onmessage = function (e) {
+              const data = e.data;
+
+              if (data.type === "progress") {
+                progressBar.value = data.progress;
+              } else if (data.type === "patternResult") {
+                logToConsole(
+                  `模式 ${data.patternIndex + 1} 搜索结果: ${data.result}`
+                );
+              } else if (data.type === "found") {
+                indexOfMp4 = data.index;
+              } else if (data.type === "done") {
+                finishExtraction(indexOfMp4, fileBytes);
+                worker.terminate();
+              }
+            };
+
+            worker.postMessage({ fileBytes, mp4Patterns });
+          } catch (error) {
+            logToConsole(`错误: ${error.message}`);
+            showResult(`处理失败: ${error.message}`, "error");
+            progressContainer.style.display = "none";
+            extractBtn.disabled = false;
+          }
+        });
+
+        function finishExtraction(indexOfMp4, fileBytes) {
+          progressContainer.style.display = "none";
+          extractBtn.disabled = false;
+
+          if (indexOfMp4 >= 0) {
+            logToConsole(`在索引 ${indexOfMp4} 处找到 MP4 文件头`);
+
+            // 创建提取的 MP4 文件
+            const mp4Data = fileBytes.slice(indexOfMp4);
+            const mp4Blob = new Blob([mp4Data], { type: "video/mp4" });
+
+            // 创建下载链接
+            const url = URL.createObjectURL(mp4Blob);
+            downloadLink.href = url;
+            downloadLink.download = `${selectedFile.name.split(".")[0]}.mp4`;
+            downloadLink.style.display = "block";
+
+            // 显示成功消息
+            showResult(
+              `成功提取视频！文件大小: ${formatFileSize(mp4Data.length)}`,
+              "success"
+            );
+
+            // 预览视频
+            const videoPreview = document.createElement("video");
+            videoPreview.src = url;
+            videoPreview.controls = true;
+            videoPreview.style.width = "100%";
+            videoPreview.style.marginTop = "15px";
+            result.appendChild(videoPreview);
+          } else {
+            showResult("在给定的 JPG 文件中未找到 MP4 视频", "error");
+          }
+        }
+
+        // 读取文件为 ArrayBuffer
+        function readFileAsArrayBuffer(file) {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = () => reject(new Error("读取文件失败"));
+            reader.readAsArrayBuffer(file);
+          });
+        }
+
+        // 显示结果消息
+        function showResult(message, type) {
+          result.textContent = message;
+          result.className = type;
+          result.style.display = "block";
+        }
+
+        // 记录日志
+        function logToConsole(message) {
+          const timestamp = new Date().toLocaleTimeString();
+          const logMessage = document.createElement("div");
+          logMessage.textContent = `[${timestamp}] ${message}`;
+          logElement.appendChild(logMessage);
+          logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        // 格式化文件大小
+        function formatFileSize(bytes) {
+          if (bytes === 0) return "0 Bytes";
+          const k = 1024;
+          const sizes = ["Bytes", "KB", "MB", "GB"];
+          const i = Math.floor(Math.log(bytes) / Math.log(k));
+          return (
+            parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
+          );
+        }
+      });
+    </script>
+  </body>
 </html>

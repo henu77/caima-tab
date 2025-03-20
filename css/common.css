@@ -1,0 +1,178 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.container {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* 拖拽区域样式 */
+.drop-area {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: background-color 0.3s;
+}
+
+.drop-area:hover {
+  background-color: #f0f0f0;
+}
+
+.drop-area.highlight {
+  border-color: #2196F3;
+  background-color: #e3f2fd;
+}
+
+/* 进度条容器 */
+.progress-container {
+  margin-top: 20px;
+  display: none;
+}
+
+progress {
+  width: 100%;
+  height: 20px;
+}
+
+/* 状态文本 */
+.status {
+  margin-top: 10px;
+  font-style: italic;
+  color: #666;
+}
+
+/* 错误文本 */
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+/* 预览区域 */
+.preview {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* 下载按钮 */
+.download-btn {
+  background-color: #2196f3;
+  margin-top: 20px;
+  display: none;
+}
+
+.download-btn:hover {
+  background-color: #0b7dda;
+}
+
+/* 日志区域 */
+.log {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  font-family: monospace;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* 文件缩略图容器 */
+.thumbnail-container {
+  margin: 15px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  display: none;
+}
+
+.file-info {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: #555;
+  word-break: break-all;
+}
+
+.file-thumbnail {
+  max-width: 500px;
+  max-height: 200px;
+  display: block;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.file-icon {
+  font-size: 48px;
+  text-align: center;
+  margin: 15px 0;
+}
+
+/* 成功和错误消息样式 */
+.success {
+  background-color: #dff0d8;
+  color: #3c763d;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.error {
+  background-color: #f2dede;
+  color: #a94442;
+  padding: 10px;
+  border-radius: 4px;
+}

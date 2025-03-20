@@ -1,0 +1,354 @@
+/* 重置和基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eae4);
+    color: #fff;
+    display: flex;
+}
+
+/* 主内容区域 */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 80px;
+    height: 100%;
+    margin-left: 60px; /* 与侧边栏宽度一致 */
+    padding: 20px;
+}
+
+/* 删除 .main-content.sidebar-active 相关样式 */
+
+/* 时间显示区域 */
+.time-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.time {
+    font-size: 5rem;
+    font-weight: 200;
+    margin-bottom: 10px;
+}
+
+.date-info {
+    font-size: 1.2rem;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* 搜索框 */
+.search-box {
+    width: 600px;
+    max-width: 90%;
+    display: flex;
+    margin-bottom: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    /* overflow: hidden; */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 搜索引擎选择器样式 */
+.search-engine-selector {
+    position: relative;
+    cursor: pointer;
+}
+
+.selected-engine {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.selected-engine span {
+    margin: 0 5px;
+}
+
+.engine-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #adadad;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    backdrop-filter: blur(10px);
+    width: 100%;
+    display: none;
+}
+
+.engine-options.show {
+    display: block;
+}
+
+.engine-option {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.engine-option:hover {
+    background-color: #f5f5f5;
+}
+
+.engine-option span {
+    margin-left: 5px;
+}
+
+.search-engine-selector {
+    position: relative;
+    width: 100px;
+    min-width: 90px;
+}
+
+.selected-engine {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 15px;
+    height: 50px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+
+
+.engine-option:hover {
+    background: rgba(0, 0, 0, 0.1);
+    background-color: #f5f5f5;
+}
+
+#search-form {
+    flex: 1;
+    display: flex;
+}
+
+#search-input {
+    flex: 1;
+    height: 50px;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0 15px;
+    color: #fff;
+    font-size: 16px;
+}
+
+#search-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#search-form button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #fff;
+    font-size: 18px;
+}
+
+/* 导航项目区域 */
+.navigation-container {
+    width: 80%;
+    max-width: 1200px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-height: calc(100vh - 300px);
+}
+
+.nav-category-title {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+}
+
+.nav-category-title i {
+    margin-right: 10px;
+}
+
+.sites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.site-card {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    color: #fff;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.site-card:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.site-icon {
+    margin-right: 15px;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.site-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.site-info {
+    flex: 1;
+    overflow: hidden;
+}
+
+.site-title {
+    font-weight: 500;
+    font-size: 16px;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.site-description {
+    font-size: 12px;
+    opacity: 0.8;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 左侧导航栏样式优化 */
+.sidebar-nav a.active {
+    background: rgba(255, 255, 255, 0.2);
+    position: relative;
+}
+
+.sidebar-nav a.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 3px;
+    background: #fff;
+}
+
+/* 侧边栏样式 - 修复样式冲突，移除重复的定义 */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    overflow-y: auto;
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav-item, .sidebar-nav li {
+    padding: 10px 0;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sidebar-nav-item:hover, .sidebar-nav li:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* 修改图标大小为35px */
+.sidebar-nav-item i, .sidebar-nav li i {
+    font-size: 20px; /* 稍微减小图标字体大小 */
+    display: block;
+    margin: 0 auto;
+    width: 35px; /* 设置图标宽度为35px */
+    height: 35px; /* 设置图标高度为35px */
+    line-height: 35px; /* 使图标垂直居中 */
+}
+
+.sidebar-nav-item span, .sidebar-nav li span {
+    display: block;
+    font-size: 12px; /* 调整字体大小以适应最多3个汉字 */
+    margin-top: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 5px;
+}
+
+/* 添加导航链接样式 */
+.sidebar-nav-item a, .sidebar-nav li a {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+}
+
+/* 自适应样式 */
+@media (max-width: 768px) {
+    .sites-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 10px;
+    }
+    
+    .site-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 10px;
+    }
+    
+    .site-icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    .navigation-container {
+        width: 90%;
+        max-height: calc(100vh - 250px);
+    }
+}
