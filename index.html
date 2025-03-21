@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>彩码导航 - 您的网络起始页</title>
+    <title>菜码导航 - 您的网络起始页</title>
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -23,22 +23,18 @@
         <div class="search-box">
             <div class="search-engine-selector">
                 <div class="selected-engine" id="selected-engine">
-                    <i class="fas fa-baidu"></i>
-                    <span>百度</span>
-                    <i class="fas fa-caret-down"></i>
+                    <img class="icon" src="icon/baidu.ico"></img>
+                    <img class="icon" src="svg/down.svg"></img>
                 </div>
                 <div class="engine-options" id="engine-options">
                     <div class="engine-option" data-engine="baidu">
-                        <i class="fas fa-baidu"></i>
-                        <span>百度</span>
+                        <img class="icon" src="icon/baidu.ico"></img>
                     </div>
                     <div class="engine-option" data-engine="bing">
-                        <i class="fab fa-microsoft"></i>
-                        <span>必应</span>
+                        <img class="icon" src="icon/microsoft.ico"></img>
                     </div>
                     <div class="engine-option" data-engine="google">
-                        <i class="fab fa-google"></i>
-                        <span>Google</span>
+                        <img class="icon" src="icon/google.ico"></img>
                     </div>
                 </div>
             </div>
@@ -47,19 +43,12 @@
                 <button type="submit"><i class="fas fa-search"></i></button>
             </form>
         </div>
-
+        
         <!-- 导航项目区域 -->
         <div class="navigation-container" id="navigation-container">
             <!-- 导航项将通过JS动态生成 -->
         </div>
     </div>
-
-    <!-- 左侧导航栏 -->
-    <aside class="sidebar" id="sidebar" style="transform: translateX(0);">
-        <ul class="sidebar-nav" id="sidebar-nav">
-            <!-- 侧边栏导航项将通过JS动态生成 -->
-        </ul>
-    </aside>
 
     <script src="js/navigation-data.js"></script>
     <script src="js/index.js"></script>

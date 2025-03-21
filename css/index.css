@@ -30,7 +30,7 @@ body {
     padding: 20px;
 }
 
-/* 删除 .main-content.sidebar-active 相关样式 */
+
 
 /* 时间显示区域 */
 .time-container {
@@ -53,7 +53,7 @@ body {
 
 /* 搜索框 */
 .search-box {
-    width: 600px;
+    width: 900px;
     max-width: 90%;
     display: flex;
     margin-bottom: 50px;
@@ -64,28 +64,25 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+.search-box .icon{
+    width: 25px;
+    height: 25px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
 /* 搜索引擎选择器样式 */
 .search-engine-selector {
     position: relative;
     cursor: pointer;
 }
 
-.selected-engine {
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-}
-
-.selected-engine span {
-    margin: 0 5px;
-}
 
 .engine-options {
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: #adadad;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 5px;
     backdrop-filter: blur(10px);
     width: 100%;
@@ -110,11 +107,6 @@ body {
     margin-left: 5px;
 }
 
-.search-engine-selector {
-    position: relative;
-    width: 100px;
-    min-width: 90px;
-}
 
 .selected-engine {
     display: flex;
@@ -227,7 +219,7 @@ body {
 
 .site-icon img {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
 }
 
@@ -255,79 +247,6 @@ body {
     text-overflow: ellipsis;
 }
 
-/* 左侧导航栏样式优化 */
-.sidebar-nav a.active {
-    background: rgba(255, 255, 255, 0.2);
-    position: relative;
-}
-
-.sidebar-nav a.active::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 3px;
-    background: #fff;
-}
-
-/* 侧边栏样式 - 修复样式冲突，移除重复的定义 */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 60px;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-    overflow-y: auto;
-}
-
-.sidebar-nav {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar-nav-item, .sidebar-nav li {
-    padding: 10px 0;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.sidebar-nav-item:hover, .sidebar-nav li:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-/* 修改图标大小为35px */
-.sidebar-nav-item i, .sidebar-nav li i {
-    font-size: 20px; /* 稍微减小图标字体大小 */
-    display: block;
-    margin: 0 auto;
-    width: 35px; /* 设置图标宽度为35px */
-    height: 35px; /* 设置图标高度为35px */
-    line-height: 35px; /* 使图标垂直居中 */
-}
-
-.sidebar-nav-item span, .sidebar-nav li span {
-    display: block;
-    font-size: 12px; /* 调整字体大小以适应最多3个汉字 */
-    margin-top: 5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 0 5px;
-}
-
-/* 添加导航链接样式 */
-.sidebar-nav-item a, .sidebar-nav li a {
-    color: inherit;
-    text-decoration: none;
-    display: block;
-}
 
 /* 自适应样式 */
 @media (max-width: 768px) {
