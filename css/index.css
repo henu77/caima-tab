@@ -24,13 +24,10 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 80px;
     height: 100%;
     margin-left: 60px; /* 与侧边栏宽度一致 */
     padding: 20px;
 }
-
-
 
 /* 时间显示区域 */
 .time-container {
@@ -56,10 +53,9 @@ body {
     width: 900px;
     max-width: 90%;
     display: flex;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 8px;
-    /* overflow: hidden; */
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
@@ -77,6 +73,15 @@ body {
     cursor: pointer;
 }
 
+.selected-engine {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 15px;
+    height: 50px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+}
 
 .engine-options {
     position: absolute;
@@ -101,28 +106,7 @@ body {
 
 .engine-option:hover {
     background-color: #f5f5f5;
-}
-
-.engine-option span {
-    margin-left: 5px;
-}
-
-
-.selected-engine {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 0 15px;
-    height: 50px;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-
-
-.engine-option:hover {
     background: rgba(0, 0, 0, 0.1);
-    background-color: #f5f5f5;
 }
 
 #search-form {
@@ -155,16 +139,57 @@ body {
     font-size: 18px;
 }
 
+/* 分类导航菜单 */
+.category-menu {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 80%;
+}
+
+.category-button {
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    backdrop-filter: blur(5px);
+}
+
+.category-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.category-button.active {
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+
 /* 导航项目区域 */
 .navigation-container {
     width: 80%;
-    max-width: 1200px;
+    /* max-width: 1080px; */
     padding: 20px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     max-height: calc(100vh - 300px);
+    overflow-y: auto; /* 添加垂直滚动 */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
 }
+
+/* 隐藏WebKit浏览器的滚动条 */
+.navigation-container::-webkit-scrollbar {
+    display: none;
+}
+
 
 .nav-category-title {
     color: #fff;
@@ -218,9 +243,9 @@ body {
 }
 
 .site-icon img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
 }
 
 .site-info {
@@ -246,7 +271,6 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 
 /* 自适应样式 */
 @media (max-width: 768px) {

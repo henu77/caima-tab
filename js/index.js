@@ -3,35 +3,71 @@ document.addEventListener('DOMContentLoaded', function() {
     const elements = {
         navigationContainer: document.getElementById('navigation-container'),
         mainContent: document.querySelector('.main-content'),
+        categoryMenu: document.getElementById('category-menu')
     };
 
     const navigationModule = {
         // 初始化导航系统
         init: function() {
-            // 如果存在导航数据，默认显示第一个分类
-            if (navigationData?.length > 0) {
-                this.renderCategoryLinks(navigationData[0].id);
-            }
+            // 生成分类菜单
+            this.renderCategoryMenu();
+            // 显示所有分类
+            this.renderAllCategories();
         },
         
-        // 渲染分类链接
-        renderCategoryLinks: function(categoryId) {
+        // 渲染分类菜单
+        renderCategoryMenu: function() {
+            if (!navigationData || navigationData.length === 0) return;
+            
+            let menuHTML = '';
+            navigationData.forEach(category => {
+                menuHTML += `<button class="category-button" data-category="${category.id}">
+                    <i class="${category.icon}"></i> ${category.title}
+                </button>`;
+            });
+            
+            elements.categoryMenu.innerHTML = menuHTML;
+            
+            // 添加点击事件
+            const categoryButtons = document.querySelectorAll('.category-button');
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const categoryId = e.currentTarget.dataset.category;
+                    document.getElementById(`category-${categoryId}`).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // 更新活跃按钮状态
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    e.currentTarget.classList.add('active');
+                });
+            });
+        },
+        
+        // 渲染所有分类
+        renderAllCategories: function() {
             // 清空现有内容
             elements.navigationContainer.innerHTML = '';
             
-            // 查找对应分类
-            const category = navigationData.find(cat => cat.id === categoryId);
-            if (!category) return;
+            // 检查是否有导航数据
+            if (!navigationData || navigationData.length === 0) return;
             
-            // 构建HTML内容
-            const html = `
-                <h2 class="nav-category-title"><i class="${category.icon}"></i> ${category.title}</h2>
-                <div class="sites-grid">
-                    ${category.links.map(link => this.createSiteCardHTML(link)).join('')}
-                </div>
-            `;
+            // 构建所有分类的HTML内容
+            let allCategoriesHTML = '';
             
-            elements.navigationContainer.innerHTML = html;
+            navigationData.forEach(category => {
+                allCategoriesHTML += `
+                    <div class="category-section" id="category-${category.id}">
+                        <h2 class="nav-category-title"><i class="${category.icon}"></i> ${category.title}</h2>
+                        <div class="sites-grid">
+                            ${category.links.map(link => this.createSiteCardHTML(link)).join('')}
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 30px;"></div>
+                `;
+            });
+            
+            elements.navigationContainer.innerHTML = allCategoriesHTML;
         },
         
         // 生成网站卡片HTML
